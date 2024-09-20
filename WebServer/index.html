@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Điều khiển đèn LED</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 50px;
+    }
+    button {
+      padding: 15px 30px;
+      margin: 10px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+    #status {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Điều khiển đèn LED</h1>
+  <button onclick="controlLED('on')">Bật đèn</button>
+  <button onclick="controlLED('off')">Tắt đèn</button>
+  
+  <p id="status">Trạng thái: Đang chờ...</p>
+
+  <script>
+    function controlLED(state) {
+      // Gửi yêu cầu GET đến API Node.js để điều khiển đèn LED
+      fetch(`/led/${state}`)
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('status').innerText = `Trạng thái: ${data}`;
+        })
+        .catch(error => {
+          console.error('Lỗi:', error);
+          document.getElementById('status').innerText = 'Lỗi kết nối!';
+        });
+    }
+  </script>
+</body>
+</html>
